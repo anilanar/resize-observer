@@ -94,9 +94,12 @@ class Scheduler {
 
   private observe(): void {
     const cb = (): void =>
-      this.observer && this.observer.observe(document.body, observerConfig);
+      this.observer &&
+      this.observer.observe(this.global.document.body, observerConfig);
     /* istanbul ignore next */
-    document.body ? cb() : this.global.addEventListener("DOMContentLoaded", cb);
+    this.global.document.body
+      ? cb()
+      : this.global.addEventListener("DOMContentLoaded", cb);
   }
 
   public start(): void {
