@@ -54,7 +54,7 @@ class Scheduler {
     }
     this.scheduled = true;
     const until = time(timeout);
-    queueResizeObserver((): void => {
+    queueResizeObserver(this.global, (): void => {
       let elementsHaveResized = false;
       try {
         // Process Calculations

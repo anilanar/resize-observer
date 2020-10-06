@@ -1,9 +1,9 @@
-import { queueMicroTask } from './queueMicroTask';
+import { queueMicroTask } from "./queueMicroTask";
 
-const queueResizeObserver = (cb: () => void): void => {
-  queueMicroTask(function ResizeObserver (): void {
+const queueResizeObserver = (global: Window, cb: () => void): void => {
+  queueMicroTask(global, function ResizeObserver(): void {
     requestAnimationFrame(cb);
   });
-}
+};
 
-export { queueResizeObserver }
+export { queueResizeObserver };
