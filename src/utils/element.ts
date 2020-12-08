@@ -1,8 +1,9 @@
 // Tests if target is an SVGGraphicsElement
 const isSVG = (target: Element): boolean => {
-  const global = target.ownerDocument.defaultView;
-  if (!global) return false;
-  return target instanceof global.SVGElement && "getBBox" in target;
+  // Legacy edge: ownerDocument can be null.
+  const scope = target.ownerDocument?.defaultView;
+  if(!scope?.SVGElement) return false;
+  return target instanceof scope.SVGElement && 'getBBox' in target;
 };
 
 // Checks to see if element is hidden (has no display)
@@ -17,10 +18,10 @@ const isHidden = (target: Element): boolean => {
 
 // Checks if an object is an Element
 const isElement = (obj: unknown): boolean => {
+  // Legacy edge: ownerDocument can be null.
   const scope = (obj as Element)?.ownerDocument?.defaultView;
-  return !!(
-    scope && obj instanceof ((scope as unknown) as typeof globalThis).Element
-  );
+  if(!scope?.Element) return false;
+  return !!(scope && obj instanceof scope.Element);
 };
 
 const isReplacedElement = (target: Element): boolean => {
